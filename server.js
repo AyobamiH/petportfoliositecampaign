@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
-  origin: 'https://petportfoliosite.pages.dev/questionaire',  // Your frontend domain
+  origin: 'https://petportfoliosite.pages.dev',  // Your frontend domain
   methods: ['POST', 'GET', 'DELETE', 'PUT'],
   credentials: true,  // Allow credentials (cookies, authorization headers, etc.)
   allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
