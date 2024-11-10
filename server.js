@@ -520,41 +520,41 @@ mongoose
 
 // Mongoose Schema and Model
 const QuestionnaireResponseSchema = new mongoose.Schema({
-  servicesOffered: [String], // Array of strings
+  servicesOffered: String, // Array of strings
   businessName: String,
   uniqueSellingPoints: String,
-  idealClients: [String], // Array of strings
-  primaryPetsServed: [String], // Array of strings
+  idealClients: String, // Array of strings
+  primaryPetsServed: String, // Array of strings
   targetAudienceDescription: String,
-  primaryWebsiteGoal: [String], // Array of strings
-  secondaryWebsiteGoal: [String], // Array of strings
+  primaryWebsiteGoal: String, // Array of strings
+  secondaryWebsiteGoal: String, // Array of strings
   haveExistingWebsite: Boolean,
   budgetRange: String,
   desiredCustomerFeelings: [String], // Array of strings
-  importantUserInteractions: [String], // Array of strings
-  websiteStyle: [String], // Array of strings
-  preferredImagery: [String], // Array of strings
-  mustHaveFeatures: [String], // Array of strings
-  needEcommerce: Boolean,
-  includeBlogOrNewsletter: Boolean,
-  websiteUpdateFrequency: [String], // Array of strings
-  includePetResources: Boolean,
-  desiredVisitorActions: [String], // Array of strings
-  ctaPlacement: [String], // Array of strings
+  importantUserInteractions: String, // Array of strings
+  websiteStyle: String, // Array of strings
+  preferredImagery: String, // Array of strings
+  mustHaveFeatures: String, // Array of strings
+  needEcommerce: String,
+  includeBlogOrNewsletter: String,
+  websiteUpdateFrequency: String, // Array of strings
+  includePetResources: String,
+  desiredVisitorActions: String, // Array of strings
+  ctaPlacement: String, // Array of strings
   admiredCompetitorWebsites: String,
-  haveLogoAndBranding: Boolean,
-  preferredColorSchemes: [String], // Array of strings
+  haveLogoAndBranding: String,
+  preferredColorSchemes: String, // Array of strings
   mobileOptimizationImportance: String,
-  anticipateServiceExpansion: Boolean,
-  needWebsiteFlexibility: Boolean,
-  interestedInSEO: Boolean,
-  interestedInAnalytics: Boolean,
+  anticipateServiceExpansion: String,
+  needWebsiteFlexibility: String,
+  interestedInSEO: String,
+  interestedInAnalytics: String,
   email: {
     type: String,
     required: true // No additional validation for email
   },
   phone: String,
-  agreeToCommunications: Boolean,
+  agreeToCommunications: String,
 }, { timestamps: true });
 
 
