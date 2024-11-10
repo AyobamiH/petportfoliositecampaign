@@ -563,44 +563,7 @@ const QuestionnaireResponse = mongoose.model(
   QuestionnaireResponseSchema
 );
 
-// Validation Middleware for POST Requests
-const validateQuestionnaire = [
-  body('servicesOffered').isArray().withMessage('Services offered must be an array.'),
-  body('businessName').optional().isString().withMessage('Business name must be a string.'),
-  body('uniqueSellingPoints').optional().isString().withMessage('Unique selling points must be a string.'),
-  body('idealClients').isArray().withMessage('Ideal clients must be an array.'),
-  body('primaryPetsServed').isArray().withMessage('Primary pets served must be an array.'),
-  body('targetAudienceDescription').optional().isString().withMessage('Target audience description must be a string.'),
-  body('primaryWebsiteGoal').isArray().withMessage('Primary website goal must be an array.'),
-  body('secondaryWebsiteGoal').isArray().withMessage('Secondary website goal must be an array.'),
-  body('haveExistingWebsite').isBoolean().withMessage('Have existing website must be a boolean.').toBoolean(),
-  body('budgetRange')
-    .isString()
-    .isIn(['<£1000', '£1000 - £2000', '£2000 - £5000', '>£5000'])
-    .withMessage('Budget range must be a valid option.'),
-  body('desiredCustomerFeelings').isArray().withMessage('Desired customer feelings must be an array.'),
-  body('importantUserInteractions').isArray().withMessage('Important user interactions must be an array.'),
-  body('websiteStyle').isArray().withMessage('Website style must be an array.'),
-  body('preferredImagery').isArray().withMessage('Preferred imagery must be an array.'),
-  body('mustHaveFeatures').isArray().withMessage('Must-have features must be an array.'),
-  body('needEcommerce').isBoolean().withMessage('Need eCommerce must be a boolean.').toBoolean(),
-  body('includeBlogOrNewsletter').isBoolean().withMessage('Include blog or newsletter must be a boolean.').toBoolean(),
-  body('websiteUpdateFrequency').isArray().withMessage('Website update frequency must be an array.'),
-  body('includePetResources').isBoolean().withMessage('Include pet resources must be a boolean.').toBoolean(),
-  body('desiredVisitorActions').isArray().withMessage('Desired visitor actions must be an array.'),
-  body('ctaPlacement').isArray().withMessage('CTA placement must be an array.'),
-  body('admiredCompetitorWebsites').optional().isString().withMessage('Admired competitor websites must be a string.'),
-  body('haveLogoAndBranding').isBoolean().withMessage('Have logo and branding must be a boolean.').toBoolean(),
-  body('preferredColorSchemes').isArray().withMessage('Preferred color schemes must be an array.'),
-  body('mobileOptimizationImportance').optional().isString().withMessage('Mobile optimization importance must be a string.'),
-  body('anticipateServiceExpansion').isBoolean().withMessage('Anticipate service expansion must be a boolean.').toBoolean(),
-  body('needWebsiteFlexibility').isBoolean().withMessage('Need website flexibility must be a boolean.').toBoolean(),
-  body('interestedInSEO').isBoolean().withMessage('Interested in SEO must be a boolean.').toBoolean(),
-  body('interestedInAnalytics').isBoolean().withMessage('Interested in analytics must be a boolean.').toBoolean(),
-  body('email').isString().withMessage('Email must be a string.').isEmail().withMessage('Email must be a valid email address.'),
-  body('phone').optional().isString().withMessage('Phone number must be a string.'),
-  body('agreeToCommunications').isBoolean().withMessage('Agree to communications must be a boolean.').toBoolean(),
-];
+
 
 
 // Controller to create a new questionnaire response
@@ -624,7 +587,7 @@ const createQuestionnaireResponse = async (req, res) => {
 };
 
 // Routes
-app.post('/questionnaire/create', validateQuestionnaire, createQuestionnaireResponse);
+app.post('/questionnaire/create', createQuestionnaireResponse);
 app.get('/questionnaire/getall', async (req, res) => {
   try {
     const responses = await QuestionnaireResponse.find().sort({ createdAt: -1 });
