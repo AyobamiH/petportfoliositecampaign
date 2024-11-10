@@ -300,34 +300,206 @@
 
 
 // server.js
+// const express = require('express');
+// const mongoose = require('mongoose');
+// require("dotenv").config({ path: ".env" });
+// const session = require("express-session");
+// const MongoStore = require("connect-mongo");
+// const cors = require('cors');
+// const path = require('path');
+// const methodOverride = require("method-override");
+// const app = express();
+
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+
+// app.use(cors({
+//   origin: 'https://petportfoliosite.pages.dev',  // Your frontend domain
+//   methods: ['POST', 'GET', 'DELETE', 'PUT'],
+//   credentials: true,
+//   allowedHeaders: ['Content-Type', 'Authorization'],
+// }));
+
+// app.use(methodOverride("_method"));
+
+// app.use(
+//   session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: false,
+//     store: MongoStore.create({ 
+//       mongoUrl: process.env.MONGODB_URI,
+//       ttl: 14 * 24 * 60 * 60,
+//     }),
+//   })
+// );
+
+// const PORT = process.env.PORT;
+
+// mongoose.connect(process.env.MONGODB_URI).then(() => {
+//   console.log('MongoDB Connected');
+// }).catch(err => {
+//   console.error('MongoDB connection error:', err);
+// });
+
+// const QuestionnaireResponseSchema = new mongoose.Schema({
+//   servicesOffered: [String],
+//   businessName: String,
+//   uniqueSellingPoints: String,
+//   idealClients: [String],
+//   primaryPetsServed: [String],
+//   targetAudienceDescription: String,
+//   primaryWebsiteGoal: [String],
+//   secondaryWebsiteGoal: [String],
+//   haveExistingWebsite: Boolean,
+//   budgetRange: { 
+//     type: String,
+//     enum: ["<£1000", "£1000 - £2000", "£2000 - £5000", ">£5000"],
+//     required: true,
+//   },
+//   desiredCustomerFeelings: [String],
+//   importantUserInteractions: [String],
+//   websiteStyle: [String],
+//   preferredImagery: [String],
+//   mustHaveFeatures: [String],
+//   needEcommerce: Boolean,
+//   includeBlogOrNewsletter: Boolean,
+//   websiteUpdateFrequency: [String],
+//   includePetResources: Boolean,
+//   desiredVisitorActions: [String],
+//   ctaPlacement: [String],
+//   admiredCompetitorWebsites: String,
+//   haveLogoAndBranding: Boolean,
+//   preferredColorSchemes: [String],
+//   mobileOptimizationImportance: String,
+//   anticipateServiceExpansion: Boolean,
+//   needWebsiteFlexibility: Boolean,
+//   interestedInSEO: Boolean,
+//   interestedInAnalytics: Boolean,
+//   email: {
+//     type: String,
+//     required: true,
+//     validate: {
+//       validator: function(v) {
+//         return /^\S+@\S+\.\S+$/.test(v);
+//       },
+//       message: props => `${props.value} is not a valid email address!`
+//     }
+//   },
+//   phone: String,
+//   agreeToCommunications: Boolean,
+// }, { timestamps: true });
+
+// const QuestionnaireResponse = mongoose.model('QuestionnaireResponse', QuestionnaireResponseSchema);
+
+// const createQuestionnaireResponse = async (req, res) => {
+//   try {
+//     const { email, budgetRange } = req.body;
+//     if (!email || !budgetRange) {
+//       return res.status(400).json({ success: false, message: 'Email and budget range are required.' });
+//     }
+
+//     const newResponse = new QuestionnaireResponse({
+//       ...req.body,
+//       agreeToCommunications: req.body.agreeToCommunications === 'Yes',
+//     });
+
+//     await newResponse.save();
+//     res.status(200).json({ success: true, message: 'Questionnaire submitted successfully!' });
+//   } catch (error) {
+//     console.error('Error Saving Questionnaire Response:', error);
+//     res.status(500).json({ success: false, message: 'An unexpected error occurred.' });
+
+//   }
+// };
+
+// const getQuestionnaireResponses = async (req, res) => {
+//   try {
+//     const responses = await QuestionnaireResponse.find().sort({ createdAt: -1 });
+//     res.status(200).json(responses);
+//   } catch (error) {
+//     console.error('Error retrieving questionnaire responses:', error);
+//     res.status(500).json({ success: false, message: 'Error retrieving questionnaire responses' });
+//   }
+// };
+
+// const deleteQuestionnaireResponse = async (req, res) => {
+//   try {
+//     const responseId = req.params.id;
+//     const result = await QuestionnaireResponse.findByIdAndDelete(responseId);
+//     if (!result) {
+//       return res.status(404).json({ success: false, message: 'Questionnaire response not found' });
+//     }
+//     res.status(200).json({ success: true, message: 'Questionnaire response deleted successfully' });
+//   } catch (error) {
+//     console.error('Error deleting questionnaire response:', error);
+//     res.status(500).json({ success: false, message: 'Error deleting questionnaire response' });
+//   }
+// };
+
+// app.post('/questionnaire/create', createQuestionnaireResponse);
+// app.get('/questionnaire/getall', getQuestionnaireResponses);
+// app.delete('/questionnaire/delete/:id', deleteQuestionnaireResponse);
+
+// app.get('/', (req, res) => {
+//   res.json('Welcome to The Questionnaire API server!');
+// });
+
+// app.use(express.static(path.join(__dirname, 'dist')));
+// app.get('*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+// });
+
+// app.listen(PORT, () => {
+//   console.log(`Server is running on port ${PORT}`);
+// });
+
+
+
 const express = require('express');
 const mongoose = require('mongoose');
-require("dotenv").config({ path: ".env" });
-const session = require("express-session");
-const MongoStore = require("connect-mongo");
+require('dotenv').config({ path: '.env' });
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const cors = require('cors');
 const path = require('path');
-const methodOverride = require("method-override");
+const methodOverride = require('method-override');
+const rateLimit = require('express-rate-limit');
+const { body, validationResult } = require('express-validator');
+
 const app = express();
 
+// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cors({
-  origin: 'https://petportfoliosite.pages.dev',  // Your frontend domain
-  methods: ['POST', 'GET', 'DELETE', 'PUT'],
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+app.use(
+  cors({
+    origin: 'https://petportfoliosite.pages.dev', // Your frontend domain
+    methods: ['POST', 'GET', 'DELETE', 'PUT'],
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allow necessary headers
+  })
+);
 
-app.use(methodOverride("_method"));
+// Use forms for put / delete
+app.use(methodOverride('_method'));
 
+// Rate Limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP, please try again later.',
+});
+app.use(limiter);
+
+// Setup Sessions - stored in MongoDB
 app.use(
   session({
-    secret: "keyboard cat",
+    secret: process.env.SESSION_SECRET || 'defaultSecret',
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({ 
+    store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URI,
       ttl: 14 * 24 * 60 * 60,
     }),
@@ -336,72 +508,122 @@ app.use(
 
 const PORT = process.env.PORT;
 
-mongoose.connect(process.env.MONGODB_URI).then(() => {
-  console.log('MongoDB Connected');
-}).catch(err => {
-  console.error('MongoDB connection error:', err);
-});
+// MongoDB connection
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => {
+    console.log('MongoDB Connected');
+  })
+  .catch((err) => {
+    console.error('MongoDB connection error:', err);
+  });
 
-const QuestionnaireResponseSchema = new mongoose.Schema({
-  servicesOffered: [String],
-  businessName: String,
-  uniqueSellingPoints: String,
-  idealClients: [String],
-  primaryPetsServed: [String],
-  targetAudienceDescription: String,
-  primaryWebsiteGoal: [String],
-  secondaryWebsiteGoal: [String],
-  haveExistingWebsite: Boolean,
-  budgetRange: { 
-    type: String,
-    enum: ["<£1000", "£1000 - £2000", "£2000 - £5000", ">£5000"],
-    required: true,
-  },
-  desiredCustomerFeelings: [String],
-  importantUserInteractions: [String],
-  websiteStyle: [String],
-  preferredImagery: [String],
-  mustHaveFeatures: [String],
-  needEcommerce: Boolean,
-  includeBlogOrNewsletter: Boolean,
-  websiteUpdateFrequency: [String],
-  includePetResources: Boolean,
-  desiredVisitorActions: [String],
-  ctaPlacement: [String],
-  admiredCompetitorWebsites: String,
-  haveLogoAndBranding: Boolean,
-  preferredColorSchemes: [String],
-  mobileOptimizationImportance: String,
-  anticipateServiceExpansion: Boolean,
-  needWebsiteFlexibility: Boolean,
-  interestedInSEO: Boolean,
-  interestedInAnalytics: Boolean,
-  email: {
-    type: String,
-    required: true,
-    validate: {
-      validator: function(v) {
-        return /^\S+@\S+\.\S+$/.test(v);
+// Mongoose Schema and Model
+const QuestionnaireResponseSchema = new mongoose.Schema(
+  {
+    servicesOffered: [String],
+    businessName: String,
+    uniqueSellingPoints: String,
+    idealClients: [String],
+    primaryPetsServed: [String],
+    targetAudienceDescription: String,
+    primaryWebsiteGoal: [String],
+    secondaryWebsiteGoal: [String],
+    haveExistingWebsite: Boolean,
+    budgetRange: {
+      type: String,
+      enum: ['<£1000', '£1000 - £2000', '£2000 - £5000', '>£5000'],
+      required: true,
+    },
+    desiredCustomerFeelings: [String],
+    importantUserInteractions: [String],
+    websiteStyle: [String],
+    preferredImagery: [String],
+    mustHaveFeatures: [String],
+    needEcommerce: Boolean,
+    includeBlogOrNewsletter: Boolean,
+    websiteUpdateFrequency: [String],
+    includePetResources: Boolean,
+    desiredVisitorActions: [String],
+    ctaPlacement: [String],
+    admiredCompetitorWebsites: String,
+    haveLogoAndBranding: Boolean,
+    preferredColorSchemes: [String],
+    mobileOptimizationImportance: String,
+    anticipateServiceExpansion: Boolean,
+    needWebsiteFlexibility: Boolean,
+    interestedInSEO: Boolean,
+    interestedInAnalytics: Boolean,
+    email: {
+      type: String,
+      required: true,
+      validate: {
+        validator: function (v) {
+          return /^\S+@\S+\.\S+$/.test(v);
+        },
+        message: (props) => `${props.value} is not a valid email address!`,
       },
-      message: props => `${props.value} is not a valid email address!`
-    }
+    },
+    phone: String,
+    agreeToCommunications: Boolean,
   },
-  phone: String,
-  agreeToCommunications: Boolean,
-}, { timestamps: true });
+  { timestamps: true }
+);
 
-const QuestionnaireResponse = mongoose.model('QuestionnaireResponse', QuestionnaireResponseSchema);
+const QuestionnaireResponse = mongoose.model(
+  'QuestionnaireResponse',
+  QuestionnaireResponseSchema
+);
 
+// Validation Middleware for POST Requests
+const validateQuestionnaire = [
+  body('servicesOffered').isArray().withMessage('Services offered must be an array.'),
+  body('businessName').optional().isString().withMessage('Business name must be a string.'),
+  body('uniqueSellingPoints').optional().isString().withMessage('Unique selling points must be a string.'),
+  body('idealClients').isArray().withMessage('Ideal clients must be an array.'),
+  body('primaryPetsServed').isArray().withMessage('Primary pets served must be an array.'),
+  body('targetAudienceDescription').optional().isString().withMessage('Target audience description must be a string.'),
+  body('primaryWebsiteGoal').isArray().withMessage('Primary website goal must be an array.'),
+  body('secondaryWebsiteGoal').isArray().withMessage('Secondary website goal must be an array.'),
+  body('haveExistingWebsite').isBoolean().withMessage('Have existing website must be a boolean.'),
+  body('budgetRange')
+    .isString()
+    .isIn(['<£1000', '£1000 - £2000', '£2000 - £5000', '>£5000'])
+    .withMessage('Budget range must be a valid option.'),
+  body('desiredCustomerFeelings').isArray().withMessage('Desired customer feelings must be an array.'),
+  body('importantUserInteractions').isArray().withMessage('Important user interactions must be an array.'),
+  body('websiteStyle').isArray().withMessage('Website style must be an array.'),
+  body('preferredImagery').isArray().withMessage('Preferred imagery must be an array.'),
+  body('mustHaveFeatures').isArray().withMessage('Must-have features must be an array.'),
+  body('needEcommerce').isBoolean().withMessage('Need eCommerce must be a boolean.'),
+  body('includeBlogOrNewsletter').isBoolean().withMessage('Include blog or newsletter must be a boolean.'),
+  body('websiteUpdateFrequency').isArray().withMessage('Website update frequency must be an array.'),
+  body('includePetResources').isBoolean().withMessage('Include pet resources must be a boolean.'),
+  body('desiredVisitorActions').isArray().withMessage('Desired visitor actions must be an array.'),
+  body('ctaPlacement').isArray().withMessage('CTA placement must be an array.'),
+  body('admiredCompetitorWebsites').optional().isString().withMessage('Admired competitor websites must be a string.'),
+  body('haveLogoAndBranding').isBoolean().withMessage('Have logo and branding must be a boolean.'),
+  body('preferredColorSchemes').isArray().withMessage('Preferred color schemes must be an array.'),
+  body('mobileOptimizationImportance').optional().isString().withMessage('Mobile optimization importance must be a string.'),
+  body('anticipateServiceExpansion').isBoolean().withMessage('Anticipate service expansion must be a boolean.'),
+  body('needWebsiteFlexibility').isBoolean().withMessage('Need website flexibility must be a boolean.'),
+  body('interestedInSEO').isBoolean().withMessage('Interested in SEO must be a boolean.'),
+  body('interestedInAnalytics').isBoolean().withMessage('Interested in analytics must be a boolean.'),
+  body('email').isString().isEmail().withMessage('Email must be a valid email address.'),
+  body('phone').optional().isString().withMessage('Phone number must be a string.'),
+  body('agreeToCommunications').isBoolean().withMessage('Agree to communications must be a boolean.'),
+];
+
+// Controller to create a new questionnaire response
 const createQuestionnaireResponse = async (req, res) => {
-  try {
-    const { email, budgetRange } = req.body;
-    if (!email || !budgetRange) {
-      return res.status(400).json({ success: false, message: 'Email and budget range are required.' });
-    }
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 
+  try {
     const newResponse = new QuestionnaireResponse({
       ...req.body,
-      agreeToCommunications: req.body.agreeToCommunications === 'Yes',
     });
 
     await newResponse.save();
@@ -412,7 +634,9 @@ const createQuestionnaireResponse = async (req, res) => {
   }
 };
 
-const getQuestionnaireResponses = async (req, res) => {
+// Routes
+app.post('/questionnaire/create', validateQuestionnaire, createQuestionnaireResponse);
+app.get('/questionnaire/getall', async (req, res) => {
   try {
     const responses = await QuestionnaireResponse.find().sort({ createdAt: -1 });
     res.status(200).json(responses);
@@ -420,9 +644,8 @@ const getQuestionnaireResponses = async (req, res) => {
     console.error('Error retrieving questionnaire responses:', error);
     res.status(500).json({ success: false, message: 'Error retrieving questionnaire responses' });
   }
-};
-
-const deleteQuestionnaireResponse = async (req, res) => {
+});
+app.delete('/questionnaire/delete/:id', async (req, res) => {
   try {
     const responseId = req.params.id;
     const result = await QuestionnaireResponse.findByIdAndDelete(responseId);
@@ -434,21 +657,20 @@ const deleteQuestionnaireResponse = async (req, res) => {
     console.error('Error deleting questionnaire response:', error);
     res.status(500).json({ success: false, message: 'Error deleting questionnaire response' });
   }
-};
+});
 
-app.post('/questionnaire/create', createQuestionnaireResponse);
-app.get('/questionnaire/getall', getQuestionnaireResponses);
-app.delete('/questionnaire/delete/:id', deleteQuestionnaireResponse);
-
+// Basic route for testing
 app.get('/', (req, res) => {
   res.json('Welcome to The Questionnaire API server!');
 });
 
+// Static files
 app.use(express.static(path.join(__dirname, 'dist')));
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
 
+// Server startup
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
