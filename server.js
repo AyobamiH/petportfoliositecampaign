@@ -519,56 +519,44 @@ mongoose
   });
 
 // Mongoose Schema and Model
-const QuestionnaireResponseSchema = new mongoose.Schema(
-  {
-    servicesOffered: [String],
-    businessName: String,
-    uniqueSellingPoints: String,
-    idealClients: [String],
-    primaryPetsServed: [String],
-    targetAudienceDescription: String,
-    primaryWebsiteGoal: [String],
-    secondaryWebsiteGoal: [String],
-    haveExistingWebsite: Boolean,
-    budgetRange: {
-      type: String,
-      enum: ['<£1000', '£1000 - £2000', '£2000 - £5000', '>£5000'],
-      required: true,
-    },
-    desiredCustomerFeelings: [String],
-    importantUserInteractions: [String],
-    websiteStyle: [String],
-    preferredImagery: [String],
-    mustHaveFeatures: [String],
-    needEcommerce: Boolean,
-    includeBlogOrNewsletter: Boolean,
-    websiteUpdateFrequency: [String],
-    includePetResources: Boolean,
-    desiredVisitorActions: [String],
-    ctaPlacement: [String],
-    admiredCompetitorWebsites: String,
-    haveLogoAndBranding: Boolean,
-    preferredColorSchemes: [String],
-    mobileOptimizationImportance: String,
-    anticipateServiceExpansion: Boolean,
-    needWebsiteFlexibility: Boolean,
-    interestedInSEO: Boolean,
-    interestedInAnalytics: Boolean,
-    email: {
-      type: String,
-      required: true,
-      validate: {
-        validator: function (v) {
-          return /^\S+@\S+\.\S+$/.test(v);
-        },
-        message: (props) => `${props.value} is not a valid email address!`,
-      },
-    },
-    phone: String,
-    agreeToCommunications: Boolean,
+const QuestionnaireResponseSchema = new mongoose.Schema({
+  servicesOffered: [String], // Array of strings
+  businessName: String,
+  uniqueSellingPoints: String,
+  idealClients: [String], // Array of strings
+  primaryPetsServed: [String], // Array of strings
+  targetAudienceDescription: String,
+  primaryWebsiteGoal: [String], // Array of strings
+  secondaryWebsiteGoal: [String], // Array of strings
+  haveExistingWebsite: Boolean,
+  budgetRange: String,
+  desiredCustomerFeelings: [String], // Array of strings
+  importantUserInteractions: [String], // Array of strings
+  websiteStyle: [String], // Array of strings
+  preferredImagery: [String], // Array of strings
+  mustHaveFeatures: [String], // Array of strings
+  needEcommerce: Boolean,
+  includeBlogOrNewsletter: Boolean,
+  websiteUpdateFrequency: [String], // Array of strings
+  includePetResources: Boolean,
+  desiredVisitorActions: [String], // Array of strings
+  ctaPlacement: [String], // Array of strings
+  admiredCompetitorWebsites: String,
+  haveLogoAndBranding: Boolean,
+  preferredColorSchemes: [String], // Array of strings
+  mobileOptimizationImportance: String,
+  anticipateServiceExpansion: Boolean,
+  needWebsiteFlexibility: Boolean,
+  interestedInSEO: Boolean,
+  interestedInAnalytics: Boolean,
+  email: {
+    type: String,
+    required: true // No additional validation for email
   },
-  { timestamps: true }
-);
+  phone: String,
+  agreeToCommunications: Boolean,
+}, { timestamps: true });
+
 
 const QuestionnaireResponse = mongoose.model(
   'QuestionnaireResponse',
@@ -585,7 +573,7 @@ const validateQuestionnaire = [
   body('targetAudienceDescription').optional().isString().withMessage('Target audience description must be a string.'),
   body('primaryWebsiteGoal').isArray().withMessage('Primary website goal must be an array.'),
   body('secondaryWebsiteGoal').isArray().withMessage('Secondary website goal must be an array.'),
-  body('haveExistingWebsite').isBoolean().withMessage('Have existing website must be a boolean.'),
+  body('haveExistingWebsite').isBoolean().withMessage('Have existing website must be a boolean.').toBoolean(),
   body('budgetRange')
     .isString()
     .isIn(['<£1000', '£1000 - £2000', '£2000 - £5000', '>£5000'])
@@ -595,24 +583,25 @@ const validateQuestionnaire = [
   body('websiteStyle').isArray().withMessage('Website style must be an array.'),
   body('preferredImagery').isArray().withMessage('Preferred imagery must be an array.'),
   body('mustHaveFeatures').isArray().withMessage('Must-have features must be an array.'),
-  body('needEcommerce').isBoolean().withMessage('Need eCommerce must be a boolean.'),
-  body('includeBlogOrNewsletter').isBoolean().withMessage('Include blog or newsletter must be a boolean.'),
+  body('needEcommerce').isBoolean().withMessage('Need eCommerce must be a boolean.').toBoolean(),
+  body('includeBlogOrNewsletter').isBoolean().withMessage('Include blog or newsletter must be a boolean.').toBoolean(),
   body('websiteUpdateFrequency').isArray().withMessage('Website update frequency must be an array.'),
-  body('includePetResources').isBoolean().withMessage('Include pet resources must be a boolean.'),
+  body('includePetResources').isBoolean().withMessage('Include pet resources must be a boolean.').toBoolean(),
   body('desiredVisitorActions').isArray().withMessage('Desired visitor actions must be an array.'),
   body('ctaPlacement').isArray().withMessage('CTA placement must be an array.'),
   body('admiredCompetitorWebsites').optional().isString().withMessage('Admired competitor websites must be a string.'),
-  body('haveLogoAndBranding').isBoolean().withMessage('Have logo and branding must be a boolean.'),
+  body('haveLogoAndBranding').isBoolean().withMessage('Have logo and branding must be a boolean.').toBoolean(),
   body('preferredColorSchemes').isArray().withMessage('Preferred color schemes must be an array.'),
   body('mobileOptimizationImportance').optional().isString().withMessage('Mobile optimization importance must be a string.'),
-  body('anticipateServiceExpansion').isBoolean().withMessage('Anticipate service expansion must be a boolean.'),
-  body('needWebsiteFlexibility').isBoolean().withMessage('Need website flexibility must be a boolean.'),
-  body('interestedInSEO').isBoolean().withMessage('Interested in SEO must be a boolean.'),
-  body('interestedInAnalytics').isBoolean().withMessage('Interested in analytics must be a boolean.'),
-  body('email').isString().isEmail().withMessage('Email must be a valid email address.'),
+  body('anticipateServiceExpansion').isBoolean().withMessage('Anticipate service expansion must be a boolean.').toBoolean(),
+  body('needWebsiteFlexibility').isBoolean().withMessage('Need website flexibility must be a boolean.').toBoolean(),
+  body('interestedInSEO').isBoolean().withMessage('Interested in SEO must be a boolean.').toBoolean(),
+  body('interestedInAnalytics').isBoolean().withMessage('Interested in analytics must be a boolean.').toBoolean(),
+  body('email').isString().withMessage('Email must be a string.').isEmail().withMessage('Email must be a valid email address.'),
   body('phone').optional().isString().withMessage('Phone number must be a string.'),
-  body('agreeToCommunications').isBoolean().withMessage('Agree to communications must be a boolean.'),
+  body('agreeToCommunications').isBoolean().withMessage('Agree to communications must be a boolean.').toBoolean(),
 ];
+
 
 // Controller to create a new questionnaire response
 const createQuestionnaireResponse = async (req, res) => {
