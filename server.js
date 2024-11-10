@@ -568,6 +568,8 @@ const QuestionnaireResponse = mongoose.model(
 
 // Controller to create a new questionnaire response
 const createQuestionnaireResponse = async (req, res) => {
+
+  console.log('Request body:', req.body); // Log request data
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
