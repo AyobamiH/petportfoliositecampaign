@@ -742,6 +742,8 @@ const QuestionnaireResponse = mongoose.model(
 
 // Controller to create a new questionnaire response
 const createQuestionnaireResponse = async (req, res) => {
+
+   console.log('Request body:', req.body); // Log request data
   try {
     const data = req.body;
 
