@@ -221,6 +221,18 @@ app.get('/questionnaire/getall', async (req, res) => {
   }
 });
 
+
+app.get('/websitequestionaire/getall', async (req, res) => {
+  try {
+    const responses = await WebsiteQuestionnaireResponse.find().sort({ createdAt: -1 });
+    res.status(200).json(responses);
+  } catch (error) {
+    console.error('Error retrieving questionnaire responses:', error);
+    res
+      .status(500)
+      .json({ success: false, message: 'Error retrieving questionnaire responses' });
+  }
+});
 app.delete('/questionnaire/delete/:id', async (req, res) => {
   try {
     const responseId = req.params.id;
