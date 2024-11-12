@@ -114,115 +114,43 @@ const QuestionnaireResponse = mongoose.model(
 );
 
 
+const WebsiteQuestionnaireSchema = new mongoose.Schema({
+  servicesOffered: { type: String, required: true },
+  businessName: { type: String, required: true },
+  uniqueSellingPoints: { type: String, required: true },
+  idealClients: [{ type: String }], // Array of strings
+  targetAudienceDescription: { type: String },
+  admiredCompetitorWebsites: { type: String },
+  agreeToCommunications: { type: String, enum: ['Yes', 'No'] },
+  anticipateServiceExpansion: { type: String, enum: ['Yes', 'No'] },
+  budgetRange: { type: String, enum: ['<£1000', '£1000 - £2000', '£2000 - £5000', '>£5000'] },
+  ctaPlacement: [{ type: String }], // Array of strings
+  desiredCustomerFeelings: [{ type: String }], // Array of strings
+  desiredVisitorActions: [{ type: String }], // Array of strings
+  email: { type: String, required: true },
+  haveExistingWebsite: { type: String, enum: ['Yes', 'No'] },
+  haveLogoAndBranding: { type: String, enum: ['Yes', 'No'] },
+  importantUserInteractions: [{ type: String }], // Array of strings
+  includeBlogOrNewsletter: { type: String, enum: ['Yes', 'No'] },
+  interestedInAnalytics: { type: String, enum: ['Yes', 'No'] },
+  interestedInSEO: { type: String, enum: ['Yes', 'No'] },
+  mobileOptimizationImportance: { type: String, enum: ['Very important', 'Somewhat important', 'Not important'] },
+  mustHaveFeatures: [{ type: String }], // Array of strings
+  needEcommerce: { type: String, enum: ['Yes', 'No'] },
+  needWebsiteFlexibility: { type: String, enum: ['Yes', 'No'] },
+  phone: { type: String },
+  preferredColorSchemes: [{ type: String }], // Array of strings
+  preferredImagery: [{ type: String }], // Array of strings
+  primaryWebsiteGoal: [{ type: String }], // Array of strings
+  secondaryWebsiteGoal: [{ type: String }], // Array of strings
+  websiteStyle: [{ type: String }], // Array of strings
+  websiteUpdateFrequency: [{ type: String }], // Array of strings
+});
 
-const WebsiteQuestionnaireResponseSchema = new mongoose.Schema(
-  {
-    servicesOffered: {
-      type: [String],
-      required: true,
-    },
-    businessName: {
-      type: String,
-      required: true,
-    },
-    uniqueSellingPoints: {
-      type: String,
-      required: true,
-    },
-    idealClients: {
-      type: [String],
-      required: true,
-    },
-    targetAudienceDescription: {
-      type: String,
-      required: true,
-    },
-    primaryWebsiteGoal: {
-      type: [String],
-      required: true,
-    },
-    secondaryWebsiteGoal: {
-      type: [String],
-    },
-    haveExistingWebsite: {
-      type: Boolean,
-      required: true,
-    },
-    budgetRange: {
-      type: String,
-      
-    },
-    desiredCustomerFeelings: {
-      type: [String],
-    },
-    importantUserInteractions: {
-      type: [String],
-    },
-    websiteStyle: {
-      type: [String],
-    },
-    preferredImagery: {
-      type: [String],
-    },
-    mustHaveFeatures: {
-      type: [String],
-    },
-    needEcommerce: {
-      type: Boolean,
-    },
-    includeBlogOrNewsletter: {
-      type: Boolean,
-    },
-    websiteUpdateFrequency: {
-      type: [String],
-    },
-    desiredVisitorActions: {
-      type: [String],
-    },
-    ctaPlacement: {
-      type: [String],
-    },
-    admiredCompetitorWebsites: {
-      type: String,
-    },
-    haveLogoAndBranding: {
-      type: Boolean,
-    },
-    preferredColorSchemes: {
-      type: [String],
-    },
-    mobileOptimizationImportance: {
-      type: String,
-    },
-    anticipateServiceExpansion: {
-      type: Boolean,
-    },
-    needWebsiteFlexibility: {
-      type: Boolean,
-    },
-    interestedInSEO: {
-      type: Boolean,
-    },
-    interestedInAnalytics: {
-      type: Boolean,
-    },
-    email: {
-      type: String,
-     
-    },
-    phone: {
-      type: String,
-    },
-    agreeToCommunications: {
-      type: Boolean,
-    },
-  },
-  { timestamps: true }
-);
 
 const WebsiteQuestionnaireResponse = mongoose.model(
-  'WebsiteQuestionnaireResponse',
-  WebsiteQuestionnaireResponseSchema
+  'WebsiteQuestionnaireSchema',
+  WebsiteQuestionnaireSchema
 );
 
 
