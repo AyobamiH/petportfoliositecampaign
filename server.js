@@ -30,16 +30,16 @@ app.use(
 // Use forms for put / delete
 app.use(methodOverride('_method'));
 
-// Set trust proxy to allow correct IP detection when behind a proxy
-app.set('trust proxy', 1);
+// // Set trust proxy to allow correct IP detection when behind a proxy
+// app.set('trust proxy', 1);
 
-// Rate Limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
-  message: 'Too many requests from this IP, please try again later.',
-});
-app.use(limiter);
+// // Rate Limiting
+// const limiter = rateLimit({
+//   windowMs: 15 * 60 * 1000, // 15 minutes
+//   max: 100, // Limit each IP to 100 requests per windowMs
+//   message: 'Too many requests from this IP, please try again later.',
+// });
+// app.use(limiter);
 
 // Setup Sessions - stored in MongoDB
 app.use(
