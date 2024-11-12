@@ -150,7 +150,7 @@ const WebsiteQuestionnaireResponseSchema = new mongoose.Schema(
     },
     budgetRange: {
       type: String,
-      required: true,
+      
     },
     desiredCustomerFeelings: {
       type: [String],
@@ -208,7 +208,7 @@ const WebsiteQuestionnaireResponseSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      required: true,
+     
     },
     phone: {
       type: String,
