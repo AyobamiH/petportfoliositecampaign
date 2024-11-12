@@ -221,7 +221,7 @@ const WebsiteQuestionnaireResponseSchema = new mongoose.Schema(
 );
 
 const WebsiteQuestionnaireResponse = mongoose.model(
-  'WenbsiteQuestionnaireResponse',
+  'WebsiteQuestionnaireResponse',
   WebsiteQuestionnaireResponseSchema
 );
 
