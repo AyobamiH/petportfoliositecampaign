@@ -30,6 +30,9 @@ app.use(
 // Use forms for put / delete
 app.use(methodOverride('_method'));
 
+// Set trust proxy to allow correct IP detection when behind a proxy
+app.set('trust proxy', 1);
+
 // Rate Limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
