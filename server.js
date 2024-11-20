@@ -77,27 +77,45 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
     targetAudienceDescription: String,
     primaryWebsiteGoal: [String],
     secondaryWebsiteGoal: [String],
-    haveExistingWebsite: Boolean,
+    haveExistingWebsite: {
+      type: Boolean,
+      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    },
     budgetRange: String,
     desiredCustomerFeelings: [String],
     importantUserInteractions: [String],
     websiteStyle: [String],
     preferredImagery: [String],
     mustHaveFeatures: [String],
-    needEcommerce: Boolean,
+    needEcommerce: {
+      type: Boolean,
+      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    },
     includeBlogOrNewsletter: Boolean,
     websiteUpdateFrequency: [String],
     includePetResources: Boolean,
     desiredVisitorActions: [String],
     ctaPlacement: [String],
     admiredCompetitorWebsites: String,
-    haveLogoAndBranding: Boolean,
+    haveLogoAndBranding: {
+      type: Boolean,
+      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    },
     preferredColorSchemes: [String],
     mobileOptimizationImportance: String,
     anticipateServiceExpansion: Boolean,
-    needWebsiteFlexibility: Boolean,
-    interestedInSEO: Boolean,
-    interestedInAnalytics: Boolean,
+    needWebsiteFlexibility: {
+      type: Boolean,
+      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    },
+    interestedInSEO: {
+      type: Boolean,
+      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    },
+    interestedInAnalytics: {
+      type: Boolean,
+      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    },
     email: {
       type: String,
       required: true,
@@ -107,6 +125,7 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 
 const QuestionnaireResponse = mongoose.model(
   'QuestionnaireResponse',
