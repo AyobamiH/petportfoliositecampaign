@@ -93,7 +93,9 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
       type: String, enum: ['Yes', 'No'] 
     },
     websiteUpdateFrequency: [String],
-    includePetResources: Boolean,
+    includePetResources: {
+      type: String, enum: ['Yes', 'No'] 
+    },
     desiredVisitorActions: [String],
     ctaPlacement: [String],
     admiredCompetitorWebsites: String,
