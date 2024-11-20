@@ -67,64 +67,59 @@ mongoose
   });
 
 // Mongoose Schema and Model
-// const QuestionnaireResponseSchema = new mongoose.Schema(
-//   {
-//     servicesOffered: [String],
-//     businessName: String,
-//     uniqueSellingPoints: String,
-//     idealClients: [String],
-//     primaryPetsServed: [String],
-//     targetAudienceDescription: String,
-//     primaryWebsiteGoal: [String],
-//     secondaryWebsiteGoal: [String],
-//     haveExistingWebsite: {
-//       type: Boolean,
-//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
-//     },
-//     budgetRange: String,
-//     desiredCustomerFeelings: [String],
-//     importantUserInteractions: [String],
-//     websiteStyle: [String],
-//     preferredImagery: [String],
-//     mustHaveFeatures: [String],
-//     needEcommerce: {
-//       type: Boolean,
-//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
-//     },
-//     includeBlogOrNewsletter: Boolean,
-//     websiteUpdateFrequency: [String],
-//     includePetResources: Boolean,
-//     desiredVisitorActions: [String],
-//     ctaPlacement: [String],
-//     admiredCompetitorWebsites: String,
-//     haveLogoAndBranding: {
-//       type: Boolean,
-//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
-//     },
-//     preferredColorSchemes: [String],
-//     mobileOptimizationImportance: String,
-//     anticipateServiceExpansion: Boolean,
-//     needWebsiteFlexibility: {
-//       type: Boolean,
-//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
-//     },
-//     interestedInSEO: {
-//       type: Boolean,
-//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
-//     },
-//     interestedInAnalytics: {
-//       type: Boolean,
-//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
-//     },
-//     email: {
-//       type: String,
-//       required: true,
-//     },
-//     phone: String,
-//     agreeToCommunications: Boolean,
-//   },
-//   { timestamps: true }
-// );
+const QuestionnaireResponseSchema = new mongoose.Schema(
+  {
+    servicesOffered: [String],
+    businessName: String,
+    uniqueSellingPoints: String,
+    idealClients: [String],
+    primaryPetsServed: [String],
+    targetAudienceDescription: String,
+    primaryWebsiteGoal: [String],
+    secondaryWebsiteGoal: [String],
+    haveExistingWebsite: {
+      type: String,
+    },
+    budgetRange: String,
+    desiredCustomerFeelings: [String],
+    importantUserInteractions: [String],
+    websiteStyle: [String],
+    preferredImagery: [String],
+    mustHaveFeatures: [String],
+    needEcommerce: {
+      type: String,
+    },
+    includeBlogOrNewsletter: Boolean,
+    websiteUpdateFrequency: [String],
+    includePetResources: Boolean,
+    desiredVisitorActions: [String],
+    ctaPlacement: [String],
+    admiredCompetitorWebsites: String,
+    haveLogoAndBranding: {
+      type: String,
+    },
+    preferredColorSchemes: [String],
+    mobileOptimizationImportance: String,
+    anticipateServiceExpansion: Boolean,
+    needWebsiteFlexibility: {
+      type: String,
+    },
+    interestedInSEO: {
+      type: String,
+      
+    },
+    interestedInAnalytics: {
+      type: String,
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    phone: String,
+    agreeToCommunications: Boolean,
+  },
+  { timestamps: true }
+);
 
 
 const QuestionnaireResponse = mongoose.model(
