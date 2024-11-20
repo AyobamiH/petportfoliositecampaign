@@ -78,7 +78,7 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
     primaryWebsiteGoal: [String],
     secondaryWebsiteGoal: [String],
     haveExistingWebsite: {
-      type: String,
+      type: String, enum: ['Yes', 'No']
     },
     budgetRange: String,
     desiredCustomerFeelings: [String],
@@ -87,7 +87,7 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
     preferredImagery: [String],
     mustHaveFeatures: [String],
     needEcommerce: {
-      type: String,
+      type: String, enum: ['Yes', 'No']
     },
     includeBlogOrNewsletter: {
       type: String, enum: ['Yes', 'No'] 
@@ -106,7 +106,7 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
       type: String, enum: ['Yes', 'No'] 
     },
     needWebsiteFlexibility: {
-      type: String,
+      type: String,enum: ['Yes', 'No']
     },
     interestedInSEO: {
       type: String, enum:['Yes', 'No']
