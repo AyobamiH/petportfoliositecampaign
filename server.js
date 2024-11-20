@@ -128,7 +128,6 @@ mongoose
 //   },
 //   { timestamps: true }
 // );
-const mongoose = require('mongoose');
 
 const QuestionnaireResponseSchema = new mongoose.Schema(
   {
