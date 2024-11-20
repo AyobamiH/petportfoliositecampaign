@@ -181,11 +181,11 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
     },
     haveExistingWebsite: {
       type: String,
-      enum: ["Yes", "No"], // Example: "No"
+     
     },
     haveLogoAndBranding: {
       type: String,
-      enum: ["Yes", "No"], // Example: "No"
+     
     },
     importantUserInteractions: {
       type: [String],
@@ -193,15 +193,15 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
     },
     includeBlogOrNewsletter: {
       type: String,
-      enum: ["Yes", "No"], // Example: "No"
+     
     },
     interestedInAnalytics: {
       type: String,
-      enum: ["Yes", "No"], // Example: "No"
+     
     },
     interestedInSEO: {
       type: String,
-      enum: ["Yes", "No"], // Example: "No"
+     
     },
     mobileOptimizationImportance: {
       type: String,
@@ -213,11 +213,11 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
     },
     needEcommerce: {
       type: String,
-      enum: ["Yes", "No"], // Example: "No"
+
     },
     needWebsiteFlexibility: {
       type: String,
-      enum: ["Yes", "No"], // Example: "No"
+     
     },
     phone: {
       type: String,
@@ -261,33 +261,33 @@ const WebsiteQuestionnaireSchema = new mongoose.Schema({
   servicesOffered: { type: String, required: true },
   businessName: { type: String, required: true },
   uniqueSellingPoints: { type: String, required: true },
-  idealClients: [{ type: String }], // Array of strings
+  idealClients: { type: String }, // Array of strings
   targetAudienceDescription: { type: String },
   admiredCompetitorWebsites: { type: String },
-  agreeToCommunications: { type: String, enum: ['Yes', 'No'] },
-  anticipateServiceExpansion: { type: String, enum: ['Yes', 'No'] },
-  budgetRange: { type: String, enum: ['<£1000', '£1000 - £2000', '£2000 - £5000', '>£5000'] },
-  ctaPlacement: [{ type: String }], // Array of strings
-  desiredCustomerFeelings: [{ type: String }], // Array of strings
-  desiredVisitorActions: [{ type: String }], // Array of strings
+  agreeToCommunications: { type: String},
+  anticipateServiceExpansion: { type: String},
+  budgetRange: { type: String},
+  ctaPlacement: { type: String }, // Array of strings
+  desiredCustomerFeelings: { type: String }, // Array of strings
+  desiredVisitorActions: { type: String }, // Array of strings
   email: { type: String, required: true },
-  haveExistingWebsite: { type: String, enum: ['Yes', 'No'] },
-  haveLogoAndBranding: { type: String, enum: ['Yes', 'No'] },
-  importantUserInteractions: [{ type: String }], // Array of strings
-  includeBlogOrNewsletter: { type: String, enum: ['Yes', 'No'] },
-  interestedInAnalytics: { type: String, enum: ['Yes', 'No'] },
-  interestedInSEO: { type: String, enum: ['Yes', 'No'] },
-  mobileOptimizationImportance: { type: String, enum: ['Very important', 'Somewhat important', 'Not important'] },
-  mustHaveFeatures: [{ type: String }], // Array of strings
-  needEcommerce: { type: String, enum: ['Yes', 'No'] },
-  needWebsiteFlexibility: { type: String, enum: ['Yes', 'No'] },
+  haveExistingWebsite: { type: String},
+  haveLogoAndBranding: { type: String },
+  importantUserInteractions: { type: String }, // Array of strings
+  includeBlogOrNewsletter: { type: String},
+  interestedInAnalytics: { type: String},
+  interestedInSEO: { type: String},
+  mobileOptimizationImportance: { type: String},
+  mustHaveFeatures: { type: String }, // Array of strings
+  needEcommerce: { type: String},
+  needWebsiteFlexibility: { type: String},
   phone: { type: String },
-  preferredColorSchemes: [{ type: String }], // Array of strings
-  preferredImagery: [{ type: String }], // Array of strings
-  primaryWebsiteGoal: [{ type: String }], // Array of strings
-  secondaryWebsiteGoal: [{ type: String }], // Array of strings
-  websiteStyle: [{ type: String }], // Array of strings
-  websiteUpdateFrequency: [{ type: String }], // Array of strings
+  preferredColorSchemes: { type: String }, // Array of strings
+  preferredImagery: { type: String }, // Array of strings
+  primaryWebsiteGoal: { type: String }, // Array of strings
+  secondaryWebsiteGoal: { type: String }, // Array of strings
+  websiteStyle: { type: String }, // Array of strings
+  websiteUpdateFrequency: { type: String }, // Array of strings
 });
 
 
