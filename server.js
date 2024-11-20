@@ -67,65 +67,189 @@ mongoose
   });
 
 // Mongoose Schema and Model
+// const QuestionnaireResponseSchema = new mongoose.Schema(
+//   {
+//     servicesOffered: [String],
+//     businessName: String,
+//     uniqueSellingPoints: String,
+//     idealClients: [String],
+//     primaryPetsServed: [String],
+//     targetAudienceDescription: String,
+//     primaryWebsiteGoal: [String],
+//     secondaryWebsiteGoal: [String],
+//     haveExistingWebsite: {
+//       type: Boolean,
+//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+//     },
+//     budgetRange: String,
+//     desiredCustomerFeelings: [String],
+//     importantUserInteractions: [String],
+//     websiteStyle: [String],
+//     preferredImagery: [String],
+//     mustHaveFeatures: [String],
+//     needEcommerce: {
+//       type: Boolean,
+//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+//     },
+//     includeBlogOrNewsletter: Boolean,
+//     websiteUpdateFrequency: [String],
+//     includePetResources: Boolean,
+//     desiredVisitorActions: [String],
+//     ctaPlacement: [String],
+//     admiredCompetitorWebsites: String,
+//     haveLogoAndBranding: {
+//       type: Boolean,
+//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+//     },
+//     preferredColorSchemes: [String],
+//     mobileOptimizationImportance: String,
+//     anticipateServiceExpansion: Boolean,
+//     needWebsiteFlexibility: {
+//       type: Boolean,
+//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+//     },
+//     interestedInSEO: {
+//       type: Boolean,
+//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+//     },
+//     interestedInAnalytics: {
+//       type: Boolean,
+//       set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+//     },
+//     email: {
+//       type: String,
+//       required: true,
+//     },
+//     phone: String,
+//     agreeToCommunications: Boolean,
+//   },
+//   { timestamps: true }
+// );
 const QuestionnaireResponseSchema = new mongoose.Schema(
   {
-    servicesOffered: [String],
-    businessName: String,
-    uniqueSellingPoints: String,
-    idealClients: [String],
-    primaryPetsServed: [String],
-    targetAudienceDescription: String,
-    primaryWebsiteGoal: [String],
-    secondaryWebsiteGoal: [String],
-    haveExistingWebsite: {
-      type: Boolean,
-      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    servicesOffered: {
+      type: String,
+      required: false, // Example: "nfgjhnfmh"
     },
-    budgetRange: String,
-    desiredCustomerFeelings: [String],
-    importantUserInteractions: [String],
-    websiteStyle: [String],
-    preferredImagery: [String],
-    mustHaveFeatures: [String],
-    needEcommerce: {
-      type: Boolean,
-      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    businessName: {
+      type: String,
+      required: false, // Example: "sgdhjnfh"
     },
-    includeBlogOrNewsletter: Boolean,
-    websiteUpdateFrequency: [String],
-    includePetResources: Boolean,
-    desiredVisitorActions: [String],
-    ctaPlacement: [String],
-    admiredCompetitorWebsites: String,
-    haveLogoAndBranding: {
-      type: Boolean,
-      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    uniqueSellingPoints: {
+      type: String,
+      required: false, // Example: "gshdnmfhg"
     },
-    preferredColorSchemes: [String],
-    mobileOptimizationImportance: String,
-    anticipateServiceExpansion: Boolean,
-    needWebsiteFlexibility: {
-      type: Boolean,
-      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    idealClients: {
+      type: [String],
+      required: false, // Example: ["Families"]
     },
-    interestedInSEO: {
-      type: Boolean,
-      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    targetAudienceDescription: {
+      type: String,
+      required: false, // Example: "htjdfhm"
     },
-    interestedInAnalytics: {
-      type: Boolean,
-      set: (val) => (val === "Yes" ? true : val === "No" ? false : val),
+    admiredCompetitorWebsites: {
+      type: String,
+      required: false, // Example: "ghdgf"
+    },
+    agreeToCommunications: {
+      type: String,
+      enum: ["Yes", "No"], // Example: "No"
+    },
+    anticipateServiceExpansion: {
+      type: String,
+      enum: ["Yes", "No"], // Example: "No"
+    },
+    budgetRange: {
+      type: String,
+      required: false, // Example: "£1000 - £2000"
+    },
+    ctaPlacement: {
+      type: [String],
+      required: false, // Example: ["After every service description"]
+    },
+    desiredCustomerFeelings: {
+      type: [String],
+      required: false, // Example: ["Professional and trustworthy"]
+    },
+    desiredVisitorActions: {
+      type: [String],
+      required: false, // Example: ["Contact you"]
     },
     email: {
       type: String,
-      required: true,
+      required: true, // Example: "sgtsrtg@lll.com"
     },
-    phone: String,
-    agreeToCommunications: Boolean,
+    haveExistingWebsite: {
+      type: String,
+      enum: ["Yes", "No"], // Example: "No"
+    },
+    haveLogoAndBranding: {
+      type: String,
+      enum: ["Yes", "No"], // Example: "No"
+    },
+    importantUserInteractions: {
+      type: [String],
+      required: false, // Example: ["Clear call-to-actions"]
+    },
+    includeBlogOrNewsletter: {
+      type: String,
+      enum: ["Yes", "No"], // Example: "No"
+    },
+    interestedInAnalytics: {
+      type: String,
+      enum: ["Yes", "No"], // Example: "No"
+    },
+    interestedInSEO: {
+      type: String,
+      enum: ["Yes", "No"], // Example: "No"
+    },
+    mobileOptimizationImportance: {
+      type: String,
+      required: false, // Example: "Somewhat important"
+    },
+    mustHaveFeatures: {
+      type: [String],
+      required: false, // Example: ["Service gallery"]
+    },
+    needEcommerce: {
+      type: String,
+      enum: ["Yes", "No"], // Example: "No"
+    },
+    needWebsiteFlexibility: {
+      type: String,
+      enum: ["Yes", "No"], // Example: "No"
+    },
+    phone: {
+      type: String,
+      required: false, // Example: "3245234"
+    },
+    preferredColorSchemes: {
+      type: [String],
+      required: false, // Example: ["Neutral and calming"]
+    },
+    preferredImagery: {
+      type: [String],
+      required: false, // Example: ["Family photos"]
+    },
+    primaryWebsiteGoal: {
+      type: [String],
+      required: false, // Example: ["Provide information"]
+    },
+    secondaryWebsiteGoal: {
+      type: [String],
+      required: false, // Example: ["Create a community through a blog"]
+    },
+    websiteStyle: {
+      type: [String],
+      required: false, // Example: ["Minimalist"]
+    },
+    websiteUpdateFrequency: {
+      type: [String],
+      required: false, // Example: ["Other"]
+    },
   },
   { timestamps: true }
 );
-
 
 const QuestionnaireResponse = mongoose.model(
   'QuestionnaireResponse',
