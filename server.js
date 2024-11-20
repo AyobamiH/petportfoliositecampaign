@@ -89,34 +89,40 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
     needEcommerce: {
       type: String,
     },
-    includeBlogOrNewsletter: Boolean,
+    includeBlogOrNewsletter: {
+      type: String, enum: ['Yes', 'No'] 
+    },
     websiteUpdateFrequency: [String],
     includePetResources: Boolean,
     desiredVisitorActions: [String],
     ctaPlacement: [String],
     admiredCompetitorWebsites: String,
     haveLogoAndBranding: {
-      type: String,
+      type: String, enum: ['Yes', 'No'] 
     },
     preferredColorSchemes: [String],
     mobileOptimizationImportance: String,
-    anticipateServiceExpansion: Boolean,
+    anticipateServiceExpansion: {
+      type: String, enum: ['Yes', 'No'] 
+    },
     needWebsiteFlexibility: {
       type: String,
     },
     interestedInSEO: {
-      type: String,
+      type: String, enum:['Yes', 'No']
       
     },
     interestedInAnalytics: {
-      type: String,
+      type: String, enum: ['Yes', 'No']
     },
     email: {
       type: String,
       required: true,
     },
     phone: String,
-    agreeToCommunications: Boolean,
+    agreeToCommunications: {
+      type: String, enum: ['Yes', 'No'] 
+    },
   },
   { timestamps: true }
 );
