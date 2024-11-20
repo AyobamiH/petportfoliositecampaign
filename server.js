@@ -67,6 +67,69 @@ mongoose
   });
 
 // Mongoose Schema and Model
+// const QuestionnaireResponseSchema = new mongoose.Schema(
+//   {
+//     servicesOffered: [String],
+//     businessName: String,
+//     uniqueSellingPoints: String,
+//     idealClients: [String],
+//     primaryPetsServed: [String],
+//     targetAudienceDescription: String,
+//     primaryWebsiteGoal: [String],
+//     secondaryWebsiteGoal: [String],
+//     haveExistingWebsite: {
+//       type: String, enum: ['Yes', 'No']
+//     },
+//     budgetRange: String,
+//     desiredCustomerFeelings: [String],
+//     importantUserInteractions: [String],
+//     websiteStyle: [String],
+//     preferredImagery: [String],
+//     mustHaveFeatures: [String],
+//     needEcommerce: {
+//       type: String, enum: ['Yes', 'No']
+//     },
+//     includeBlogOrNewsletter: {
+//       type: String, enum: ['Yes', 'No'] 
+//     },
+//     websiteUpdateFrequency: [String],
+//     includePetResources: {
+//       type: String, enum: ['Yes', 'No'] 
+//     },
+//     desiredVisitorActions: [String],
+//     ctaPlacement: [String],
+//     admiredCompetitorWebsites: String,
+//     haveLogoAndBranding: {
+//       type: String, enum: ['Yes', 'No'] 
+//     },
+//     preferredColorSchemes: [String],
+//     mobileOptimizationImportance: String,
+//     anticipateServiceExpansion: {
+//       type: String, enum: ['Yes', 'No'] 
+//     },
+//     needWebsiteFlexibility: {
+//       type: String,enum: ['Yes', 'No']
+//     },
+//     interestedInSEO: {
+//       type: String, enum:['Yes', 'No']
+      
+//     },
+//     interestedInAnalytics: {
+//       type: String, enum: ['Yes', 'No']
+//     },
+//     email: {
+//       type: String,
+//       required: true,
+//     },
+//     phone: String,
+//     agreeToCommunications: {
+//       type: String, enum: ['Yes', 'No'] 
+//     },
+//   },
+//   { timestamps: true }
+// );
+const mongoose = require('mongoose');
+
 const QuestionnaireResponseSchema = new mongoose.Schema(
   {
     servicesOffered: [String],
@@ -78,7 +141,10 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
     primaryWebsiteGoal: [String],
     secondaryWebsiteGoal: [String],
     haveExistingWebsite: {
-      type: String, enum: ['Yes', 'No']
+      type: String,
+      enum: ['Yes', 'No'],
+      get: (val) => val === 'Yes' || val === true, // Convert to boolean
+      set: (val) => (val ? 'Yes' : 'No'), // Convert to 'Yes' or 'No'
     },
     budgetRange: String,
     desiredCustomerFeelings: [String],
@@ -87,35 +153,58 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
     preferredImagery: [String],
     mustHaveFeatures: [String],
     needEcommerce: {
-      type: String, enum: ['Yes', 'No']
+      type: String,
+      enum: ['Yes', 'No'],
+      get: (val) => val === 'Yes' || val === true,
+      set: (val) => (val ? 'Yes' : 'No'),
     },
     includeBlogOrNewsletter: {
-      type: String, enum: ['Yes', 'No'] 
+      type: String,
+      enum: ['Yes', 'No'],
+      get: (val) => val === 'Yes' || val === true,
+      set: (val) => (val ? 'Yes' : 'No'),
     },
     websiteUpdateFrequency: [String],
     includePetResources: {
-      type: String, enum: ['Yes', 'No'] 
+      type: String,
+      enum: ['Yes', 'No'],
+      get: (val) => val === 'Yes' || val === true,
+      set: (val) => (val ? 'Yes' : 'No'),
     },
     desiredVisitorActions: [String],
     ctaPlacement: [String],
     admiredCompetitorWebsites: String,
     haveLogoAndBranding: {
-      type: String, enum: ['Yes', 'No'] 
+      type: String,
+      enum: ['Yes', 'No'],
+      get: (val) => val === 'Yes' || val === true,
+      set: (val) => (val ? 'Yes' : 'No'),
     },
     preferredColorSchemes: [String],
     mobileOptimizationImportance: String,
     anticipateServiceExpansion: {
-      type: String, enum: ['Yes', 'No'] 
+      type: String,
+      enum: ['Yes', 'No'],
+      get: (val) => val === 'Yes' || val === true,
+      set: (val) => (val ? 'Yes' : 'No'),
     },
     needWebsiteFlexibility: {
-      type: String,enum: ['Yes', 'No']
+      type: String,
+      enum: ['Yes', 'No'],
+      get: (val) => val === 'Yes' || val === true,
+      set: (val) => (val ? 'Yes' : 'No'),
     },
     interestedInSEO: {
-      type: String, enum:['Yes', 'No']
-      
+      type: String,
+      enum: ['Yes', 'No'],
+      get: (val) => val === 'Yes' || val === true,
+      set: (val) => (val ? 'Yes' : 'No'),
     },
     interestedInAnalytics: {
-      type: String, enum: ['Yes', 'No']
+      type: String,
+      enum: ['Yes', 'No'],
+      get: (val) => val === 'Yes' || val === true,
+      set: (val) => (val ? 'Yes' : 'No'),
     },
     email: {
       type: String,
@@ -123,10 +212,17 @@ const QuestionnaireResponseSchema = new mongoose.Schema(
     },
     phone: String,
     agreeToCommunications: {
-      type: String, enum: ['Yes', 'No'] 
+      type: String,
+      enum: ['Yes', 'No'],
+      get: (val) => val === 'Yes' || val === true,
+      set: (val) => (val ? 'Yes' : 'No'),
     },
   },
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { getters: true }, // Apply getters during JSON conversion
+    toObject: { getters: true },
+  }
 );
 
 
