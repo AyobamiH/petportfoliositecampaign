@@ -133,49 +133,6 @@ const QuestionnaireResponse = mongoose.model(
   QuestionnaireResponseSchema
 );
 
-
-const WebsiteQuestionnaireSchema = new mongoose.Schema({
-  servicesOffered: { type: String, required: true },
-  businessName: { type: String, required: true },
-  uniqueSellingPoints: { type: String, required: true },
-  idealClients: [{ type: String }], // Array of strings
-  targetAudienceDescription: { type: String },
-  admiredCompetitorWebsites: { type: String },
-  agreeToCommunications: { type: String, enum: ['Yes', 'No'] },
-  anticipateServiceExpansion: { type: String, enum: ['Yes', 'No'] },
-  budgetRange: { type: String, enum: ['<£1000', '£1000 - £2000', '£2000 - £5000', '>£5000'] },
-  ctaPlacement: [{ type: String }], // Array of strings
-  desiredCustomerFeelings: [{ type: String }], // Array of strings
-  desiredVisitorActions: [{ type: String }], // Array of strings
-  email: { type: String, required: true },
-  haveExistingWebsite: { type: String, enum: ['Yes', 'No'] },
-  haveLogoAndBranding: { type: String, enum: ['Yes', 'No'] },
-  importantUserInteractions: [{ type: String }], // Array of strings
-  includeBlogOrNewsletter: { type: String, enum: ['Yes', 'No'] },
-  interestedInAnalytics: { type: String, enum: ['Yes', 'No'] },
-  interestedInSEO: { type: String, enum: ['Yes', 'No'] },
-  mobileOptimizationImportance: { type: String, enum: ['Very important', 'Somewhat important', 'Not important'] },
-  mustHaveFeatures: [{ type: String }], // Array of strings
-  needEcommerce: { type: String, enum: ['Yes', 'No'] },
-  needWebsiteFlexibility: { type: String, enum: ['Yes', 'No'] },
-  phone: { type: String },
-  preferredColorSchemes: [{ type: String }], // Array of strings
-  preferredImagery: [{ type: String }], // Array of strings
-  primaryWebsiteGoal: [{ type: String }], // Array of strings
-  secondaryWebsiteGoal: [{ type: String }], // Array of strings
-  websiteStyle: [{ type: String }], // Array of strings
-  websiteUpdateFrequency: [{ type: String }], // Array of strings
-});
-
-
-const WebsiteQuestionnaireResponse = mongoose.model(
-  'WebsiteQuestionnaireSchema',
-  WebsiteQuestionnaireSchema
-);
-
-
-
-// Controller to create a new questionnaire response
 const createQuestionnaireResponse = async (req, res) => {
 
    console.log('Request body:', req.body); // Log request data
@@ -200,34 +157,9 @@ const createQuestionnaireResponse = async (req, res) => {
   }
 };
 
-const createWebsiteQuestionnaireResponse = async (req, res) => {
-
-   console.log('Request body:', req.body); // Log request data
-  try {
-    const data = req.body;
-
-    // Validate required fields
-    if (!data.email || !data.budgetRange) {
-      return res
-        .status(400)
-        .json({ success: false, message: 'Email and budget range are required.' });
-    }
-
-    const newResponse = new WebsiteQuestionnaireResponse(data);
-
-    await newResponse.save();
-
-    res.status(200).json({ success: true, message: 'Website Questionnaire submitted successfully!' });
-  } catch (error) {
-    console.error('Error Saving Questionnaire Response:', error);
-    res.status(500).json({ success: false, message: 'Error submitting questionnaire!' });
-  }
-};
-
-// Routes
 app.post('/questionnaire/create', createQuestionnaireResponse);
 
-app.post('/websitequestionaire/create', createWebsiteQuestionnaireResponse)
+
 
 app.get('/questionnaire/getall', async (req, res) => {
   try {
@@ -242,17 +174,83 @@ app.get('/questionnaire/getall', async (req, res) => {
 });
 
 
-app.get('/websitequestionaire/getall', async (req, res) => {
-  try {
-    const responses = await WebsiteQuestionnaireResponse.find().sort({ createdAt: -1 });
-    res.status(200).json(responses);
-  } catch (error) {
-    console.error('Error retrieving questionnaire responses:', error);
-    res
-      .status(500)
-      .json({ success: false, message: 'Error retrieving questionnaire responses' });
-  }
-});
+// const WebsiteQuestionnaireSchema = new mongoose.Schema({
+//   servicesOffered: { type: String, required: true },
+//   businessName: { type: String, required: true },
+//   uniqueSellingPoints: { type: String, required: true },
+//   idealClients: [{ type: String }], // Array of strings
+//   targetAudienceDescription: { type: String },
+//   admiredCompetitorWebsites: { type: String },
+//   agreeToCommunications: { type: String, enum: ['Yes', 'No'] },
+//   anticipateServiceExpansion: { type: String, enum: ['Yes', 'No'] },
+//   budgetRange: { type: String, enum: ['<£1000', '£1000 - £2000', '£2000 - £5000', '>£5000'] },
+//   ctaPlacement: [{ type: String }], // Array of strings
+//   desiredCustomerFeelings: [{ type: String }], // Array of strings
+//   desiredVisitorActions: [{ type: String }], // Array of strings
+//   email: { type: String, required: true },
+//   haveExistingWebsite: { type: String, enum: ['Yes', 'No'] },
+//   haveLogoAndBranding: { type: String, enum: ['Yes', 'No'] },
+//   importantUserInteractions: [{ type: String }], // Array of strings
+//   includeBlogOrNewsletter: { type: String, enum: ['Yes', 'No'] },
+//   interestedInAnalytics: { type: String, enum: ['Yes', 'No'] },
+//   interestedInSEO: { type: String, enum: ['Yes', 'No'] },
+//   mobileOptimizationImportance: { type: String, enum: ['Very important', 'Somewhat important', 'Not important'] },
+//   mustHaveFeatures: [{ type: String }], // Array of strings
+//   needEcommerce: { type: String, enum: ['Yes', 'No'] },
+//   needWebsiteFlexibility: { type: String, enum: ['Yes', 'No'] },
+//   phone: { type: String },
+//   preferredColorSchemes: [{ type: String }], // Array of strings
+//   preferredImagery: [{ type: String }], // Array of strings
+//   primaryWebsiteGoal: [{ type: String }], // Array of strings
+//   secondaryWebsiteGoal: [{ type: String }], // Array of strings
+//   websiteStyle: [{ type: String }], // Array of strings
+//   websiteUpdateFrequency: [{ type: String }], // Array of strings
+// });
+
+
+// const WebsiteQuestionnaireResponse = mongoose.model(
+//   'WebsiteQuestionnaireSchema',
+//   WebsiteQuestionnaireSchema
+// );
+// Controller to create a new questionnaire response
+// const createWebsiteQuestionnaireResponse = async (req, res) => {
+
+//    console.log('Request body:', req.body); // Log request data
+//   try {
+//     const data = req.body;
+
+//     // Validate required fields
+//     if (!data.email || !data.budgetRange) {
+//       return res
+//         .status(400)
+//         .json({ success: false, message: 'Email and budget range are required.' });
+//     }
+
+//     const newResponse = new WebsiteQuestionnaireResponse(data);
+
+//     await newResponse.save();
+
+//     res.status(200).json({ success: true, message: 'Website Questionnaire submitted successfully!' });
+//   } catch (error) {
+//     console.error('Error Saving Questionnaire Response:', error);
+//     res.status(500).json({ success: false, message: 'Error submitting questionnaire!' });
+//   }
+// };
+
+// Routes
+// app.post('/websitequestionaire/create', createWebsiteQuestionnaireResponse)
+// app.get('/websitequestionaire/getall', async (req, res) => {
+//   try {
+//     const responses = await WebsiteQuestionnaireResponse.find().sort({ createdAt: -1 });
+//     res.status(200).json(responses);
+//   } catch (error) {
+//     console.error('Error retrieving questionnaire responses:', error);
+//     res
+//       .status(500)
+//       .json({ success: false, message: 'Error retrieving questionnaire responses' });
+//   }
+// });
+
 app.delete('/questionnaire/delete/:id', async (req, res) => {
   try {
     const responseId = req.params.id;
